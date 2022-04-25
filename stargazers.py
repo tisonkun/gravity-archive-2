@@ -42,13 +42,13 @@ import argparse
 import clickhouse_driver
 import pandas as pd
 
+from clickhouse_driver.util.escape import escape_param
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--repo', help="source repository", action='append', nargs='+')
     args = parser.parse_args()
 
-    existence = [f"'{repo}'" for repos in args.repo for repo in repos]
-    existence = ', '.join(existence)
     client = clickhouse_driver.Client(
         host = 'play.clickhouse.com',
         user = 'explorer',
@@ -57,6 +57,8 @@ if __name__ == '__main__':
             'use_numpy': True,
         }
     )
+    existence = [escape_param(repo, client.connection.context)for repos in args.repo for repo in repos]
+    existence = ', '.join(existence)
 
     result = client.query_dataframe(f"""
     SELECT
