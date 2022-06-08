@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     Watcher = namedtuple('Watcher', ['repo', 'commit'])
     watchers = [
-        Watcher(repo='stretchr/testify', commit='285adcc5ced0bb267a7c874cfa3ca238266ce14f')
+        Watcher(repo='stretchr/testify', commit='41453c009af9a942261b7a25a88521d0d6804e7f')
     ]
 
     exit_code = 0
